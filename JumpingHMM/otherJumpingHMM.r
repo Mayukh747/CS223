@@ -2,9 +2,12 @@ states1 <- c("M1", "M2", "M3", "M4", "M5", "I1", "I2", "I3", "I4", "T", "N", "C"
 states2 <- c("m1", "m2", "m3", "m4", "m5", "i1", "i2", "i3","i4")
 states <- c(states1, states2)
 
+#minimum inter transit probability
+x <- 0.33
+
 transitionMatrixLeftTop <- matrix(data=c(
    0, 0.9,   0,   0,   0, 0.1,   0,   0,   0,   0,   0,   0,
-   0,   0, 0.8,   0,   0,   0, 0.1,   0,   0,   0,   0,   0,
+   0,   0, 0.8*(0.9-x),   0,   0,   0, 0.1,   0,   0,   0,   0,   0,
    0,   0,   0, 0.9,   0,   0,   0, 0.1,   0,   0,   0,   0,
    0,   0,   0,   0, 0.9,   0,   0,   0, 0.1,   0,   0,   0,
    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,
@@ -20,7 +23,7 @@ dimnames=list(states1, states1))
 
 transitionMatrixRightBottom<- matrix(data=c(
    0, 0.9,   0,   0,   0, 0.1,   0,   0,   0,
-   0,   0, 0.8,   0,   0,   0, 0.1,   0,   0,
+   0,   0, 0.8*(0.9-x),   0,   0,   0, 0.1,   0,   0,
    0,   0,   0, 0.9,   0,   0,   0, 0.1,   0,
    0,   0,   0,   0, 0.9,   0,   0,   0, 0.1,
    0,   0,   0,   0,   0,   0,   0,   0,   0,
@@ -31,14 +34,16 @@ transitionMatrixRightBottom<- matrix(data=c(
    ), byrow=TRUE, nrow=9,
 dimnames=list(states2, states2))
 
-# a matrix of zeroes
+
 transitionMatrixRightTop<-matrix(0, length(states1),
 length(states2), dimnames=list(states1, states2))
-transitionMatrixRightTop [2, 3]<-0.1
-transitionMatrixRightTop [11, 1]<-0.1
+#M2 -> m3
+transitionMatrixRightTop [2, 3]<- x
+transitionMatrixRightTop [11, 1]<- 0.1
 transitionMatrixLeftBottom<-matrix(0, length(states2),
 length(states1), dimnames=list(states2, states1))
-transitionMatrixLeftBottom [2, 3]<- 0.8
+#m2 -> M3
+transitionMatrixLeftBottom [2, 3]<- x
 transitionMatrixLeftBottom [5, 12]<-1
 
 
@@ -105,23 +110,3 @@ viterbi_result <- viterbi(jumping_hmm, observations)
 print(viterbi_result)
 avg_length <- avg_length + length(viterbi_result)
 print("")
-
-# # Sequence 2: "AGCTGA"
-# observations <- c("A", "G", "C", "T", "G", "A")
-# print('observations <- c("A", "G", "C", "T", "G", "A")')
-# viterbi_result <- viterbi(jumping_hmm, observations)
-# print(viterbi_result)
-# avg_length <- avg_length + length(viterbi_result)
-# print("")
-
-# # Sequence 3: "AGCCTGA"
-# observations <- c("A", "G", "C", "C", "T", "G", "A")
-# print('observations <- c("A", "G", "C", "C", "T", "G", "A")')
-# viterbi_result <- viterbi(jumping_hmm, observations)
-# print(viterbi_result)
-# avg_length <- avg_length + length(viterbi_result)
-# print("")
-
-# Calculate and print the average length of Viterbi results
-avg_length <- avg_length / 3
-cat("Average length of Viterbi results:", avg_length, "\n")
