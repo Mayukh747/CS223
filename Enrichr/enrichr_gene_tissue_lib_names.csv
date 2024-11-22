@@ -1,0 +1,12 @@
+GENE,TISSUE,LIBRARY
+TMEM14A,Memory,Epigenomics_Roadmap_HM_ChIP-seq
+TMEM14A,Hippo,ENCODE_TF_ChIP-seq_2015
+GLUL,panc,Epigenomics_Roadmap_HM_ChIP-seq
+GLUL,panc,ENCODE_TF_ChIP-seq_2015
+BRAF,Memory,ENCODE_TF_ChIP-seq_2015
+BRAF,erythroblast,ENCODE_TF_ChIP-seq_2015
+GLUL,Memory,ENCODE_TF_ChIP-seq_2015
+GLUL,Heart,ENCODE_TF_ChIP-seq_2015
+BRAF, ,ENCODE_TF_ChIP-seq_2015
+BRAF,memory,Epigenomics_Roadmap_HM_ChIP-seq
+BRAF,panc,Epigenomics_Roadmap_HM_ChIP-seq
